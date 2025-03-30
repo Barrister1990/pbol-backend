@@ -22,17 +22,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     // Parse request body
-    const { userId, name, image = null, email } = req.body;
+    const { userId, name, image = null, email, role } = req.body;
 
     // Validate required fields
-    if (!userId || !name || !email) {
+    if (!userId || !name || !email ||!role) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
     // Define new user details
     const newUser: UserRequest = {
       id: userId,
-      role: "user",
+      role,
       name,
       ...(image && { image }), // Add image if provided
       custom: { email },
